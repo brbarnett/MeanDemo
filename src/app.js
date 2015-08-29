@@ -23,6 +23,6 @@
                 //localStorageServiceProvider.setStorageType('localStorage');
                 //localStorageServiceProvider.setPrefix('confRoom');
 
-                $httpProvider.interceptors.push('requestInterceptor');
+                //$httpProvider.interceptors.push('requestInterceptor');
             }])
 })();
