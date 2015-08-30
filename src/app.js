@@ -4,7 +4,7 @@
     angular.module('app',
         [
             'ng',
-            'restangular',
+            //'restangular',
             'ui.router',
             //'LocalStorageModule',
             //'matchmedia-ng',
@@ -13,12 +13,9 @@
         ])
         .config(
         [
-            'RestangularProvider',
             '$urlRouterProvider',
-            //'localStorageServiceProvider',
-            '$httpProvider',
-            function (RestangularProvider, $urlRouterProvider, $httpProvider) {
-                RestangularProvider.setBaseUrl('/api');
+            function ($urlRouterProvider) {
+                //RestangularProvider.setBaseUrl('/api');
                 $urlRouterProvider.otherwise('/');
                 //localStorageServiceProvider.setStorageType('localStorage');
                 //localStorageServiceProvider.setPrefix('confRoom');
