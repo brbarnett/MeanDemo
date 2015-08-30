@@ -4,7 +4,7 @@
     angular.module('app').config(['$stateProvider', function($stateProvider) {
         $stateProvider
             .state('second', {
-                url: '/second',
+                url: '/second/',
                 templateUrl: 'second/second.html'
             });
     }])
