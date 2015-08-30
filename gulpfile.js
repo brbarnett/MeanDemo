@@ -1,5 +1,3 @@
-var Stream = require('stream')
-var PassThrough = Stream.PassThrough
 var fs = require('fs');
 var gulp = require('gulp');
 var sourcemaps = require('gulp-sourcemaps');
@@ -18,16 +16,26 @@ var rimraf = require('rimraf');
 
 var paths = {
     dist: 'public',
+    fontDependencies: [
+      './node_modules/bootstrap/dist/fonts/**'
+    ],
     index: 'src/index.html',
-    libs: 'public/libs',
+    libs: {
+        css: 'public/libs/css',
+        fonts: 'public/libs/fonts',
+        js: 'public/libs/js'
+    },
     scriptDependencies: [
         './node_modules/jquery/dist/jquery.js',
         './node_modules/underscore/underscore.js',
         './node_modules/angular/angular.js',
         './node_modules/angular-ui-router/release/angular-ui-router.js',
-        './node_modules/restangular/dist/restangular.js'
+        './node_modules/bootstrap/dist/js/bootstrap.js'
     ],
     scripts: 'src/**/*.js',
+    styleDependencies: [
+      './node_modules/bootstrap/dist/css/bootstrap.css'
+    ],
     styles: 'src/**/*.less',
     templates: [
         'src/**/*.html',
@@ -46,7 +54,19 @@ gulp.task('clean', [], function(){
 gulp.task('libs-js', [], function(){
    return gulp.src(paths.scriptDependencies)
     .pipe(plumber())
-    .pipe(gulp.dest(paths.libs));
+    .pipe(gulp.dest(paths.libs.js));
+});
+
+gulp.task('libs-css', [], function(){
+    return gulp.src(paths.styleDependencies)
+        .pipe(plumber())
+        .pipe(gulp.dest(paths.libs.css));
+});
+
+gulp.task('libs-fonts', [], function(){
+    return gulp.src(paths.fontDependencies)
+        .pipe(plumber())
+        .pipe(gulp.dest(paths.libs.fonts));
 });
 
 gulp.task('scripts', [], function () {
@@ -74,3 +94,7 @@ gulp.task('index', [], function(){
    return gulp.src(paths.index)
     .pipe(gulp.dest(paths.dist));
 });
+
+gulp.task('dependencies', ['libs-js', 'libs-css', 'libs-fonts']);
+
+gulp.task('build', ['clean', 'dependencies', 'scripts', 'templates', 'styles', 'index']);
